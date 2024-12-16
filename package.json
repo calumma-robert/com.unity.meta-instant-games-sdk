@@ -1,0 +1,21 @@
+{
+  "name": "com.unity.meta-instant-games-sdk",
+  "version": "0.0.1-exp.2",
+  "displayName": "Facebook Instant Games SDK",
+  "description": "This package provides C# bindings to the Facebook Instant Games SDK, making it easy to integrate Facebook Instant Games with your Unity project. Since the Facebook Instant Games SDK is originally a JavaScript SDK, this package is compatible only with web builds.\n\nKey features include identity verification, user data access, in-app purchases, and social sharing integrations. By using this package, Unity developers can leverage the same powerful tools for analytics, monetization, and player engagement that Meta developers use, bringing top-tier social gaming experiences to their web-based Unity games.",
+  "unity": "6000.1",
+  "unityRelease": "0a6",
+  "_upm": {
+    "changelog": "### Added\n\n* Monetization APIs:\n  * FBInstant.getInterstitialAdAsync\n  * FBInstant.loadBannerAdAsync\n  * FBInstant.hideBannerAdAsync\n  * FBInstant.getRewardedVideoAsync\n  * FBInstant.getRewardedInterstitialAsync\n  * AdInstance.getPlacementID\n  * AdInstance.loadAsync\n  * AdInstance.showAsync\n* `init.jspre` file that will download and initialize the JavaScript SDK\n\n### Changed\n\n* Namespace for the C# bindings has changed from `Internal.Bindings` to `Meta.InstantGames`.\n* Top level class for the C# bindings has changed from `FacebookInstantGamesSDK` to `Sdk`"
+  },
+  "upmCi": {
+    "footprint": "e6fbbf81a02321f5aaf9ea82158659df40f5a751"
+  },
+  "documentationUrl": "https://docs.unity3d.com/Packages/com.unity.meta-instant-games-sdk@0.0/manual/index.html",
+  "repository": {
+    "url": "https://github.cds.internal.unity3d.com/unity/fb-instantgames-bindings.git",
+    "type": "git",
+    "revision": "85ac1253f05e4f2a07f2d1c909f8e1605edfdd1d"
+  },
+  "_fingerprint": "f0916d5bf70f1d11447a3e9624c585cdd265f590"
+}
