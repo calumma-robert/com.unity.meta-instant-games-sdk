@@ -92,6 +92,6 @@ namespace JsNative
             return values;
         }
 
-        protected override string CreateJs() => CreateArray();
+        internal override string CreateJs() => CreateArray();
     }
 }

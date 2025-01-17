@@ -41,7 +41,7 @@ namespace Meta.InstantGames
         /// Get the id of the player.
         /// </summary>
         /// <returns>The ID of the player.</returns>
-        public string getPlayerID()
+        public string GetPlayerID()
         {
             return JS_SignedPlayerInfo_getPlayerID(Uuid);
         }
@@ -50,7 +50,7 @@ namespace Meta.InstantGames
         /// A signature to verify this object indeed comes from Facebook. The string is base64url encoded and signed with an HMAC version of your App Secret, based on the OAuth 2.0 spec.
         /// </summary>
         /// <returns>The signature string.</returns>
-        public string getSignature()
+        public string GetSignature()
         {
             return JS_SignedPlayerInfo_getSignature(Uuid);
         }

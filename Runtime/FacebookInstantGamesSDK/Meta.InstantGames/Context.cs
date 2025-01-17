@@ -95,7 +95,7 @@ namespace Meta.InstantGames
         /// <param name="id">ID of the desired context or the string SOLO to switch into a solo context.</param>
         /// <param name="switchSilentlyIfSolo">If switching into a solo context, set this to true to switch silently, with no confirmation dialog or toast. This only has an effect when switching into a solo context.</param>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the game has switched into the specified context, or rejects otherwise.</returns>
-        public Runtime.WebTask switchAsync(string id, bool switchSilentlyIfSolo = false)
+        public Runtime.WebTask SwitchAsync(string id, bool switchSilentlyIfSolo = false)
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_Context_switchAsync(Uuid, id, switchSilentlyIfSolo, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -106,7 +106,7 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="options">An object specifying conditions on the contexts that should be offered.</param>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the game has switched into the context chosen by the user. Otherwise, the promise will reject (if the user cancels out of the dialog, for example).</returns>
-        public Runtime.WebTask chooseAsync(ContextOptions options = null)
+        public Runtime.WebTask ChooseAsync(ContextOptions options = null)
         {
             var optionsUuid = options?.Uuid;
 
@@ -119,7 +119,7 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="suggestedPlayerIds">A list of game suggested playerIDs or a single suggested playerID or no input</param>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the game has switched into the new context, or rejects otherwise.</returns>
-        public Runtime.WebTask createAsync(string[] suggestedPlayerIds = null)
+        public Runtime.WebTask CreateAsync(string[] suggestedPlayerIds = null)
         {
             var suggestedPlayerIdsUuid =
                 suggestedPlayerIds != null && suggestedPlayerIds.Length != 0
@@ -134,13 +134,13 @@ namespace Meta.InstantGames
         /// Gets an array of ContextPlayer objects containing information about active players in the current context (people who played the game in the current context in the last 90 days). This may include the current player. Exceptions: NETWORK_FAILURE, CLIENT_UNSUPPORTED_OPERATION, INVALID_OPERATION
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> containing an array of <see cref="Meta.InstantGames.ContextPlayer"/>.</returns>
-        public async Runtime.WebTask<ContextPlayer[]> getPlayersAsync()
+        public async Runtime.WebTask<ContextPlayer[]> GetPlayersAsync()
         {
             var resultUuid = await new Runtime.WebTask<string>((System.IntPtr taskPtr) =>
                 JS_Context_getPlayersAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleStringFailure)
             );
 
-            return JsNative.JsRefArray<ContextPlayer>.FromJs(resultUuid).Values;
+            return JsNative.JsRefArray<Meta.InstantGames.ContextPlayer>.FromJs(resultUuid).Values;
         }
     }
 }

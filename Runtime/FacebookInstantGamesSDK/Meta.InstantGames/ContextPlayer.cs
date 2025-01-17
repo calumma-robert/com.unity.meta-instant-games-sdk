@@ -47,7 +47,7 @@ namespace Meta.InstantGames
         /// Get the id of the context player.
         /// </summary>
         /// <returns>The ID of the context player.</returns>
-        public string getID()
+        public string GetID()
         {
             return JS_ContextPlayer_getID(Uuid);
         }
@@ -56,7 +56,7 @@ namespace Meta.InstantGames
         /// Get the player's localized display name.
         /// </summary>
         /// <returns>The player's localized display name.</returns>
-        public string getName()
+        public string GetName()
         {
             return JS_ContextPlayer_getName(Uuid);
         }
@@ -65,7 +65,7 @@ namespace Meta.InstantGames
         /// Get the player's public profile photo.
         /// </summary>
         /// <returns>A url to the player's public profile photo.</returns>
-        public string getPhoto()
+        public string GetPhoto()
         {
             return JS_ContextPlayer_getPhoto(Uuid);
         }

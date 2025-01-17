@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -55,6 +56,19 @@ namespace Runtime
             GCHandle handle = GCHandle.Alloc(this);
             IntPtr taskPtr = GCHandle.ToIntPtr(handle);
             action(taskPtr);
+        }
+
+        /// <summary>
+        /// Waits for the task to complete execution.
+        /// The method is intended to support compatibility with Unity coroutines.
+        /// </summary>
+        /// <returns>An enumerator that is iterable until the task completes, at which point iteration will stop.</returns>
+        public IEnumerator WaitForCompletion()
+        {
+            while (!IsCompleted)
+            {
+                yield return null;
+            }
         }
 
         /// <summary>

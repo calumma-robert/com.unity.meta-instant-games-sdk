@@ -108,7 +108,7 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="payload">Tournament creation options</param>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> containing a <see cref="Meta.InstantGames.Tournament"/>.</returns>
-        public async Runtime.WebTask<Tournament> createAsync(CreateTournamentPayload payload)
+        public async Runtime.WebTask<Tournament> CreateAsync(CreateTournamentPayload payload)
         {
             var payloadUuid = payload.Uuid;
 
@@ -116,7 +116,7 @@ namespace Meta.InstantGames
                 JS_Tournaments_createAsync(Uuid, payloadUuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleStringFailure)
             );
 
-            return Tournament.FromJs(instanceUuid);
+            return Meta.InstantGames.Tournament.FromJs(instanceUuid);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="score">An integer value representing the player's score at the end of an activity.</param>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the score post is completed.</returns>
-        public Runtime.WebTask postScoreAsync(double score)
+        public Runtime.WebTask PostScoreAsync(double score)
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_Tournaments_postScoreAsync(Uuid, score, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -135,7 +135,7 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="payload">Specifies share content</param>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves if the tournament is shared, or rejects otherwise.</returns>
-        public Runtime.WebTask shareAsync(ShareTournamentPayload payload)
+        public Runtime.WebTask ShareAsync(ShareTournamentPayload payload)
         {
             var payloadUuid = payload.Uuid;
 
@@ -148,7 +148,7 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="tournamentID">The Tournament ID of the desired context to switch into.</param>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the game has switched into the specified tournament context, or rejects otherwise.</returns>
-        public Runtime.WebTask joinAsync(string tournamentID)
+        public Runtime.WebTask JoinAsync(string tournamentID)
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_Tournaments_joinAsync(Uuid, tournamentID, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -158,13 +158,13 @@ namespace Meta.InstantGames
         /// Returns a list of eligible tournaments that can be surfaced in-game, including tournaments 1) the player has created; 2) the player is participating in; 3) the player's friends (who granted permission) are participating in. The instant tournaments returned are active. An instant tournament is expired if its end time is in the past. For each instant tournament, there is only one unique context ID linked to it, and that ID doesn't change. Exceptions: NETWORK_FAILURE, INVALID_OPERATION
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> containing a list of <see cref="Meta.InstantGames.Tournament"/>.</returns>
-        public async Runtime.WebTask<Tournament[]> getTournamentsAsync()
+        public async Runtime.WebTask<Tournament[]> GetTournamentsAsync()
         {
             var resultUuid = await new Runtime.WebTask<string>((System.IntPtr taskPtr) =>
                 JS_Tournaments_getTournamentsAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleStringFailure)
             );
 
-            return JsNative.JsRefArray<Tournament>.FromJs(resultUuid).Values;
+            return JsNative.JsRefArray<Meta.InstantGames.Tournament>.FromJs(resultUuid).Values;
         }
     }
 }

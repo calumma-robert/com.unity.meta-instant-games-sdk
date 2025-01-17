@@ -63,7 +63,7 @@ namespace Meta.InstantGames
         /// Return the Audience Network placement ID of this ad instance.
         /// </summary>
         /// <returns>The Audience Network placement ID of this ad instance.</returns>
-        public string getPlacementID()
+        public string GetPlacementID()
         {
             return JS_AdInstance_getPlacementID(Uuid);
         }
@@ -72,7 +72,7 @@ namespace Meta.InstantGames
         /// Preload the ad. The returned <see cref="Runtime.WebTask"/> resolves when the preload completes, and rejects if it failed. Exceptions: ADS_FREQUENT_LOAD, ADS_NO_FILL, INVALID_PARAM, NETWORK_FAILURE
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the ad is preloaded.</returns>
-        public Runtime.WebTask loadAsync()
+        public Runtime.WebTask LoadAsync()
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_AdInstance_loadAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -82,7 +82,7 @@ namespace Meta.InstantGames
         /// Present the ad. The returned <see cref="Runtime.WebTask"/> resolves when user finished watching the ad, and rejects if it failed to present or was closed during the ad. Exceptions: ADS_NOT_LOADED, INVALID_PARAM, NETWORK_FAILURE, INVALID_OPERATION, RATE_LIMITED, USER_INPUT
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the user finishes watching the ad.</returns>
-        public Runtime.WebTask showAsync()
+        public Runtime.WebTask ShowAsync()
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_AdInstance_showAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));

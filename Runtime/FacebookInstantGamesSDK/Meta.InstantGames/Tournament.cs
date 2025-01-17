@@ -59,7 +59,7 @@ namespace Meta.InstantGames
         /// The unique ID that is associated with this instant tournament.
         /// </summary>
         /// <returns>A string.</returns>
-        public string getID()
+        public string GetID()
         {
             return JS_Tournament_getID(Uuid);
         }
@@ -68,7 +68,7 @@ namespace Meta.InstantGames
         /// The unique context ID that is associated with this instant tournament.
         /// </summary>
         /// <returns>A string.</returns>
-        public string getContextID()
+        public string GetContextID()
         {
             return JS_Tournament_getContextID(Uuid);
         }
@@ -77,7 +77,7 @@ namespace Meta.InstantGames
         /// Timestamp when the instant tournament ends. If the end time is in the past, then the instant tournament is already finished and has expired.
         /// </summary>
         /// <returns>A number.</returns>
-        public double getEndTime()
+        public double GetEndTime()
         {
             return JS_Tournament_getEndTime(Uuid);
         }
@@ -86,7 +86,7 @@ namespace Meta.InstantGames
         /// Title of the tournament provided upon the creation of the tournament. This is an optional field that can be set by creating the tournament using the FBInstant.tournament.createAsync() API.
         /// </summary>
         /// <returns>A nullable string.</returns>
-        public string getTitle()
+        public string GetTitle()
         {
             return JS_Tournament_getTitle(Uuid);
         }
@@ -95,7 +95,7 @@ namespace Meta.InstantGames
         /// Payload of the tournament provided upon the creation of the tournament. This is an optional field that can be set by creating the tournament using the FBInstant.tournament.createAsync() API. Returns null if none was provided.
         /// </summary>
         /// <returns>A nullable string.</returns>
-        public string getPayload()
+        public string GetPayload()
         {
             return JS_Tournament_getPayload(Uuid);
         }

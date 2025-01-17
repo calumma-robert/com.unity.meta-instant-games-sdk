@@ -47,7 +47,7 @@ namespace Meta.InstantGames
         /// Get the id of the connected player.
         /// </summary>
         /// <returns>The ID of the connected player.</returns>
-        public string getID()
+        public string GetID()
         {
             return JS_ConnectedPlayer_getID(Uuid);
         }
@@ -56,7 +56,7 @@ namespace Meta.InstantGames
         /// Get the player's display name.
         /// </summary>
         /// <returns>The player's display name.</returns>
-        public string getName()
+        public string GetName()
         {
             return JS_ConnectedPlayer_getName(Uuid);
         }
@@ -65,7 +65,7 @@ namespace Meta.InstantGames
         /// Get the player's public profile photo.
         /// </summary>
         /// <returns>A url to the player's public profile photo.</returns>
-        public string getPhoto()
+        public string GetPhoto()
         {
             return JS_ConnectedPlayer_getPhoto(Uuid);
         }

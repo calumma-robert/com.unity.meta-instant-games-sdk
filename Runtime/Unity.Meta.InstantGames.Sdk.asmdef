@@ -1,5 +1,5 @@
 {
-    "name": "Unity.FacebookInstantGamesSdk",
+    "name": "Unity.Meta.InstantGames.Sdk",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [
@@ -13,5 +13,5 @@
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
-    "noEngineReferences": false
+    "noEngineReferences": true
 }

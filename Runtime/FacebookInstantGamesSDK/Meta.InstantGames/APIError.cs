@@ -1,32 +1,16 @@
 namespace Meta.InstantGames
 {
     /// <summary>
-    /// Represents an exception thrown in JavaScript
-    /// </summary>
-    public class JsException : System.Exception
-    {
-        internal JsException(string message, ErrorCode code) : base(message)
-        {
-            Code = code;
-        }
-
-        /// <summary>
-        /// The relevant error code
-        /// </summary>
-        public ErrorCode Code { get; }
-    }
-
-    /// <summary>
     /// An API Error returned by the Instant Games SDK
     /// </summary>
-    public class APIError : JsNative.JsNative
+    public class APIError : System.Exception
     {
-        internal APIError(string uuid) : base(uuid) { }
+        internal JsNative.JsNative JsNative { get; }
 
-        /// <summary>
-        /// Represents the underlying exception
-        /// </summary>
-        public JsException JsException => new JsException(Message.ToString(), Code);
+        internal APIError(string uuid)
+        {
+            JsNative = new JsNative.JsNative(uuid);
+        }
 
         /// <summary>
         /// The relevant error code
@@ -35,7 +19,7 @@ namespace Meta.InstantGames
         {
             get
             {
-                var code = GetMemberString("code");
+                var code = JsNative.GetMemberString("code");
                 return (ErrorCode) System.Enum.Parse(typeof(ErrorCode), code);
             }
         }
@@ -43,31 +27,28 @@ namespace Meta.InstantGames
         /// <summary>
         /// A message describing the error
         /// </summary>
-        public string Message
+        public override string Message
         {
-            get => GetMemberString("message");
+            get => JsNative.GetMemberString("message");
         }
 
         [Runtime.MonoPInvokeCallback]
-        internal static void HandleVoidFailure(System.IntPtr taskPtr, string errorUuid)
-        {
-            var error = new APIError(errorUuid);
-            Runtime.WebTaskAsyncResult.HandleFailure(taskPtr, error.JsException);
-        }
+        internal static void HandleVoidFailure(System.IntPtr taskPtr, string errorUuid) =>
+            Runtime.WebTaskAsyncResult.HandleFailure(taskPtr, new APIError(errorUuid));
 
         [Runtime.MonoPInvokeCallback]
-        internal static void HandleBoolFailure(System.IntPtr taskPtr, string errorUuid) => HandleFailure<bool>(taskPtr, errorUuid);
+        internal static void HandleBoolFailure(System.IntPtr taskPtr, string errorUuid) =>
+            HandleFailure<bool>(taskPtr, errorUuid);
 
         [Runtime.MonoPInvokeCallback]
-        internal static void HandleNumberFailure(System.IntPtr taskPtr, string errorUuid) => HandleFailure<double>(taskPtr, errorUuid);
+        internal static void HandleNumberFailure(System.IntPtr taskPtr, string errorUuid) =>
+            HandleFailure<double>(taskPtr, errorUuid);
 
         [Runtime.MonoPInvokeCallback]
-        internal static void HandleStringFailure(System.IntPtr taskPtr, string errorUuid) => HandleFailure<string>(taskPtr, errorUuid);
+        internal static void HandleStringFailure(System.IntPtr taskPtr, string errorUuid) =>
+            HandleFailure<string>(taskPtr, errorUuid);
 
-        private static void HandleFailure<T>(System.IntPtr taskPtr, string errorUuid)
-        {
-            var error = new APIError(errorUuid);
-            Runtime.WebTaskAsyncResult.HandleFailure<T>(taskPtr, error.JsException);
-        }
+        private static void HandleFailure<T>(System.IntPtr taskPtr, string errorUuid) =>
+            Runtime.WebTaskAsyncResult.HandleFailure<T>(taskPtr, new APIError(errorUuid));
     }
 }

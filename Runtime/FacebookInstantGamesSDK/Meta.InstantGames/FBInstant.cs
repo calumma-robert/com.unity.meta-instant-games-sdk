@@ -221,7 +221,7 @@ namespace Meta.InstantGames
         /// <summary>
         /// Contains functions and properties related to the current game context.
         /// </summary>
-        public Context context
+        public Context Context
         {
             get
             {
@@ -238,7 +238,7 @@ namespace Meta.InstantGames
         /// <summary>
         /// Contains functions and properties related to the current player.
         /// </summary>
-        public Player player
+        public Player Player
         {
             get
             {
@@ -255,7 +255,7 @@ namespace Meta.InstantGames
         /// <summary>
         /// Contains functions and properties related to tournaments.
         /// </summary>
-        public Tournaments tournament
+        public Tournaments Tournament
         {
             get
             {
@@ -271,7 +271,7 @@ namespace Meta.InstantGames
         /// <summary>
         /// Quits the game.
         /// </summary>
-        public void quit()
+        public void Quit()
         {
             JS_FBInstant_quit(Uuid);
         }
@@ -280,7 +280,7 @@ namespace Meta.InstantGames
         /// Initializes the SDK library. This should be called before any other SDK functions.
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the SDK is ready to use.</returns>
-        public Runtime.WebTask initializeAsync()
+        public Runtime.WebTask InitializeAsync()
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_FBInstant_initializeAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -290,7 +290,7 @@ namespace Meta.InstantGames
         /// This indicates that the game has finished initial loading and is ready to start. Context information will be up-to-date when the returned <see cref="Runtime.WebTask"/> resolves. Exceptions: INVALID_PARAM, CLIENT_UNSUPPORTED_OPERATION
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when the game should start.</returns>
-        public Runtime.WebTask startGameAsync()
+        public Runtime.WebTask StartGameAsync()
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_FBInstant_startGameAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -300,7 +300,7 @@ namespace Meta.InstantGames
         /// Prompts the user to create a shortcut to the game if they are eligible to. Can only be called once per session. Exceptions: USER_INPUT, PENDING_REQUEST, CLIENT_REQUIRES_UPDATE, INVALID_OPERATION
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask"/>.</returns>
-        public Runtime.WebTask createShortcutAsync()
+        public Runtime.WebTask CreateShortcutAsync()
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_FBInstant_createShortcutAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -310,17 +310,17 @@ namespace Meta.InstantGames
         /// Requests and performs haptic feedback on supported devices. Exceptions: CLIENT_UNSUPPORTED_OPERATION, INVALID_OPERATION
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask"/> when haptic feedback was requested successfully.</returns>
-        public Runtime.WebTask performHapticFeedbackAsync()
+        public Runtime.WebTask PerformHapticFeedbackAsync()
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_FBInstant_performHapticFeedbackAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
         }
 
         /// <summary>
-        /// Provides a list of API functions that are supported by the client.
+        /// Provides a list of API functions that are supported by the client. Note that these are the names from the JavaScript SDK. The corresponding C# property and method names begin with a capital letter.
         /// </summary>
         /// <returns>A list of API functions that the client explicitly supports.</returns>
-        public string[] getSupportedAPIs()
+        public string[] GetSupportedAPIs()
         {
             var arrayUuid = JS_FBInstant_getSupportedAPIs(Uuid);
             var array = JsNative.JsArray<string>.FromJs(arrayUuid);
@@ -331,13 +331,13 @@ namespace Meta.InstantGames
         /// Fetch the instant tournament out of the current context the user is playing. This will reject if there is no instant tournament link to the current context. The instant tournament returned can be either active or expired (An instant tournament is expired if its end time is in the past). For each instant tournament, there is only one unique context ID linked to it, and that ID doesn't change. Exceptions: PENDING_REQUEST, NETWORK_FAILURE, INVALID_OPERATION, TOURNAMENT_NOT_FOUND
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> containing a <see cref="Meta.InstantGames.Tournament"/>.</returns>
-        public async Runtime.WebTask<Tournament> getTournamentAsync()
+        public async Runtime.WebTask<Tournament> GetTournamentAsync()
         {
             var instanceUuid = await new Runtime.WebTask<string>((System.IntPtr taskPtr) =>
                 JS_FBInstant_getTournamentAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleStringFailure)
             );
 
-            return Tournament.FromJs(instanceUuid);
+            return Meta.InstantGames.Tournament.FromJs(instanceUuid);
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="payload">A payload that describes the update</param>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when Facebook gives control back to the game.</returns>
-        public Runtime.WebTask updateAsync(CustomUpdatePayload payload)
+        public Runtime.WebTask UpdateAsync(CustomUpdatePayload payload)
         {
             var payloadUuid = payload.Uuid;
 
@@ -358,7 +358,7 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="payload">A payload that describes the update</param>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves when Facebook gives control back to the game.</returns>
-        public Runtime.WebTask updateAsync(LeaderboardUpdatePayload payload)
+        public Runtime.WebTask UpdateAsync(LeaderboardUpdatePayload payload)
         {
             var payloadUuid = payload.Uuid;
 
@@ -370,7 +370,7 @@ namespace Meta.InstantGames
         /// Returns whether or not the user is eligible to have shortcut creation requested. Will return false if createShortcutAsync was already called this session or the user is ineligible for shortcut creation. Exceptions: PENDING_REQUEST, CLIENT_REQUIRES_UPDATE, INVALID_OPERATION
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> that resolves with true if the game can request the player create a shortcut to the game, and false otherwise</returns>
-        public Runtime.WebTask<bool> canCreateShortcutAsync()
+        public Runtime.WebTask<bool> CanCreateShortcutAsync()
         {
             return new Runtime.WebTask<bool>((System.IntPtr taskPtr) =>
                 JS_FBInstant_canCreateShortcutAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleBoolFailure)
@@ -383,7 +383,7 @@ namespace Meta.InstantGames
         /// <param name="placementID">The placement ID that's been set up in your Audience Network settings.</param>
         /// <param name="bannerPosition">An optional parameter that sets the position of the banner to be "top" or "bottom." The default is a banner at the bottom of the screen.</param>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> that resolves after loading a banner ad, or rejects with an <see cref="Meta.InstantGames.APIError"/> if it couldn't be created.</returns>
-        public Runtime.WebTask loadBannerAdAsync(string placementID, string bannerPosition = "bottom")
+        public Runtime.WebTask LoadBannerAdAsync(string placementID, string bannerPosition = "bottom")
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_FBInstant_loadBannerAdAsync(Uuid, placementID, bannerPosition, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -393,7 +393,7 @@ namespace Meta.InstantGames
         /// Attempt to hide a banner ad. Exceptions: CLIENT_UNSUPPORTED_OPERATION
         /// </summary>
         /// <returns>A <see cref="Runtime.WebTask"/> that resolves after the ad is hidden.</returns>
-        public Runtime.WebTask hideBannerAdAsync()
+        public Runtime.WebTask HideBannerAdAsync()
         {
             return new Runtime.WebTask((System.IntPtr taskPtr) =>
                 JS_FBInstant_hideBannerAdAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleVoidFailure));
@@ -404,13 +404,13 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="placementID">The placement ID that's been set up in your Audience Network settings.</param>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> that resolves with an <see cref="Meta.InstantGames.AdInstance"/>, or rejects with an <see cref="Meta.InstantGames.APIError"/> if it couldn't be created.</returns>
-        public async Runtime.WebTask<AdInstance> getInterstitialAdAsync(string placementID)
+        public async Runtime.WebTask<AdInstance> GetInterstitialAdAsync(string placementID)
         {
             var instanceUuid = await new Runtime.WebTask<string>((System.IntPtr taskPtr) =>
                 JS_FBInstant_getInterstitialAdAsync(Uuid, placementID, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleStringFailure)
             );
 
-            return AdInstance.FromJs(instanceUuid);
+            return Meta.InstantGames.AdInstance.FromJs(instanceUuid);
         }
 
         /// <summary>
@@ -418,13 +418,13 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="placementID">The placement ID that's been set up in your Audience Network settings.</param>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> that resolves with an <see cref="Meta.InstantGames.AdInstance"/>, or rejects with an <see cref="Meta.InstantGames.APIError"/> if it couldn't be created.</returns>
-        public async Runtime.WebTask<AdInstance> getRewardedVideoAsync(string placementID)
+        public async Runtime.WebTask<AdInstance> GetRewardedVideoAsync(string placementID)
         {
             var instanceUuid = await new Runtime.WebTask<string>((System.IntPtr taskPtr) =>
                 JS_FBInstant_getRewardedVideoAsync(Uuid, placementID, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleStringFailure)
             );
 
-            return AdInstance.FromJs(instanceUuid);
+            return Meta.InstantGames.AdInstance.FromJs(instanceUuid);
         }
 
         /// <summary>
@@ -432,13 +432,13 @@ namespace Meta.InstantGames
         /// </summary>
         /// <param name="placementID">The placement ID that's been set up in your Audience Network settings.</param>
         /// <returns>A <see cref="Runtime.WebTask{T}"/> that resolves with an <see cref="Meta.InstantGames.AdInstance"/>, or rejects with an <see cref="Meta.InstantGames.APIError"/> if it couldn't be created.</returns>
-        public async Runtime.WebTask<AdInstance> getRewardedInterstitialAsync(string placementID)
+        public async Runtime.WebTask<AdInstance> GetRewardedInterstitialAsync(string placementID)
         {
             var instanceUuid = await new Runtime.WebTask<string>((System.IntPtr taskPtr) =>
                 JS_FBInstant_getRewardedInterstitialAsync(Uuid, placementID, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleStringFailure)
             );
 
-            return AdInstance.FromJs(instanceUuid);
+            return Meta.InstantGames.AdInstance.FromJs(instanceUuid);
         }
     }
 }
