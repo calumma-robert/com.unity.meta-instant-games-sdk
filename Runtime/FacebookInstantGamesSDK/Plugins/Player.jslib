@@ -112,5 +112,19 @@ mergeInto(LibraryManager.library, {
                 const errorUuid = JS_saveReference(error);
                 {{{ makeDynCall('vii', 'apiErrorCallback')}}}(taskPtr, JS_StringBuffer(errorUuid));
             });
+    },
+    JS_Player_getASIDAsync__deps: ['$JS_getInstance', '$JS_StringBuffer', '$JS_saveReference'],
+    JS_Player_getASIDAsync: function(uuidPtr, taskPtr, successCallback, apiErrorCallback)
+    {
+        const instance = JS_getInstance(uuidPtr);
+        const args = [];
+        instance["getASIDAsync"](...args)
+            .then(function(promiseResult) {
+                {{{ makeDynCall('vii', 'successCallback')}}}(taskPtr, JS_StringBuffer(promiseResult));
+            })
+            .catch(function(error) {
+                const errorUuid = JS_saveReference(error);
+                {{{ makeDynCall('vii', 'apiErrorCallback')}}}(taskPtr, JS_StringBuffer(errorUuid));
+            });
     }
 });

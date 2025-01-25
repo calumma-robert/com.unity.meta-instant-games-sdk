@@ -117,6 +117,9 @@ namespace Meta.InstantGames
             Runtime.ResultCallback<string> successCallback,
             Runtime.ResultCallback<string> apiErrorCallback);
 
+        [DllImport("__Internal")]
+        private static extern string JS_FBInstant_getLocale(string instanceUUID);
+
         #else
 
         private static void JS_FBInstant_quit(string instanceUUID)
@@ -214,6 +217,9 @@ namespace Meta.InstantGames
             Runtime.ResultCallback<string> successCallback,
             Runtime.ResultCallback<string> apiErrorCallback)
             => successCallback(taskPtr, "fake value from stub implementation");
+
+        private static string JS_FBInstant_getLocale(string instanceUUID)
+            => "fake value from stub implementation";
 
         #endif
 
@@ -439,6 +445,32 @@ namespace Meta.InstantGames
             );
 
             return Meta.InstantGames.AdInstance.FromJs(instanceUuid);
+        }
+
+        private Payments _payments;
+        /// <summary>
+        /// Contains functions and properties related to payments and purchases of game products.
+        /// </summary>
+        public Payments Payments
+        {
+            get
+            {
+                if (_payments is null)
+                {
+                    var uuid = GetMemberReference("payments");
+                    _payments = uuid == null ? null : Payments.FromJs(uuid);
+                }
+                return _payments;
+            }
+        }
+
+        /// <summary>
+        /// The current locale. See https://lookaside.facebook.com/developers/resources/?id=FacebookLocales.xml for a complete list of supported locale values. Use this to determine what languages the current game should be localized with. The value will not be accurate until FBInstant.initializeAsync() resolves.
+        /// </summary>
+        /// <returns>The current locale.</returns>
+        public string GetLocale()
+        {
+            return JS_FBInstant_getLocale(Uuid);
         }
     }
 }

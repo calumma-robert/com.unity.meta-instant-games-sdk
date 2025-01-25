@@ -186,5 +186,13 @@ mergeInto(LibraryManager.library, {
                 const errorUuid = JS_saveReference(error);
                 {{{ makeDynCall('vii', 'apiErrorCallback')}}}(taskPtr, JS_StringBuffer(errorUuid));
             });
+    },
+    JS_FBInstant_getLocale__deps: ['$JS_getInstance', '$JS_StringBuffer'],
+    JS_FBInstant_getLocale: function(uuidPtr)
+    {
+        const instance = JS_getInstance(uuidPtr);
+        const args = [];
+        const result = instance["getLocale"](...args);
+        return result === null ? null : JS_StringBuffer(result);
     }
 });

@@ -71,6 +71,13 @@ namespace Meta.InstantGames
             Runtime.ResultCallback<bool> successCallback,
             Runtime.ResultCallback<string> apiErrorCallback);
 
+        [DllImport("__Internal")]
+        private static extern void JS_Player_getASIDAsync(
+            string instanceUUID,
+            System.IntPtr taskPtr,
+            Runtime.ResultCallback<string> successCallback,
+            Runtime.ResultCallback<string> apiErrorCallback);
+
         #else
 
         private static string JS_Player_getName(string instanceUUID)
@@ -122,6 +129,13 @@ namespace Meta.InstantGames
             Runtime.ResultCallback<bool> successCallback,
             Runtime.ResultCallback<string> apiErrorCallback)
             => successCallback(taskPtr, false);
+
+        private static void JS_Player_getASIDAsync(
+            string instanceUUID,
+            System.IntPtr taskPtr,
+            Runtime.ResultCallback<string> successCallback,
+            Runtime.ResultCallback<string> apiErrorCallback)
+            => successCallback(taskPtr, "fake value from stub implementation");
 
         #endif
 
@@ -212,6 +226,17 @@ namespace Meta.InstantGames
         {
             return new Runtime.WebTask<bool>((System.IntPtr taskPtr) =>
                 JS_Player_canSubscribeBotAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleBoolFailure)
+            );
+        }
+
+        /// <summary>
+        /// A unique identifier for the player. This is the standard Facebook Application-Scoped ID which is used for all Graph API calls. If your game shares an AppID with a native game this is the ID you will see in the native game too.
+        /// </summary>
+        /// <returns>A <see cref="Runtime.WebTask{T}"/> that resolves with the player's unique identifier.</returns>
+        public Runtime.WebTask<string> GetASIDAsync()
+        {
+            return new Runtime.WebTask<string>((System.IntPtr taskPtr) =>
+                JS_Player_getASIDAsync(Uuid, taskPtr, Runtime.WebTaskAsyncResult.HandleSuccess, APIError.HandleStringFailure)
             );
         }
     }
