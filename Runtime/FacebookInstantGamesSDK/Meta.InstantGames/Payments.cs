@@ -48,7 +48,7 @@ namespace Meta.InstantGames
             string instanceUUID,
             string purchaseToken,
             System.IntPtr taskPtr,
-            Runtime.ResultCallback<string> successCallback,
+            Runtime.VoidResultCallback successCallback,
             Runtime.ResultCallback<string> apiErrorCallback);
 
         [DllImport("__Internal")]
@@ -85,9 +85,9 @@ namespace Meta.InstantGames
             string instanceUUID,
             string purchaseToken,
             System.IntPtr taskPtr,
-            Runtime.ResultCallback<string> successCallback,
+            Runtime.VoidResultCallback successCallback,
             Runtime.ResultCallback<string> apiErrorCallback)
-            => successCallback(taskPtr, "fake value from stub implementation");
+            => successCallback(taskPtr);
 
         private static void JS_Payments_onReady(
             string instanceUUID,

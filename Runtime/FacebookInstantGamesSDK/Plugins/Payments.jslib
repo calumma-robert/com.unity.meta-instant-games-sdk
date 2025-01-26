@@ -50,9 +50,8 @@ mergeInto(LibraryManager.library, {
         const instance = JS_getInstance(uuidPtr);
         const args = [UTF8ToString(purchaseTokenPtr)];
         instance["consumePurchaseAsync"](...args)
-            .then(function(promiseResult) {
-                const resultUuid = JS_saveReference(promiseResult);
-                {{{ makeDynCall('vii', 'successCallback')}}}(taskPtr, JS_StringBuffer(resultUuid));
+            .then(function() {
+                {{{ makeDynCall('vi', 'successCallback')}}}(taskPtr);
             })
             .catch(function(error) {
                 const errorUuid = JS_saveReference(error);
