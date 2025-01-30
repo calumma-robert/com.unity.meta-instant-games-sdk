@@ -123,6 +123,9 @@ namespace Meta.InstantGames
         [DllImport("__Internal")]
         private static extern string JS_FBInstant_getPlatform(string instanceUUID);
 
+        [DllImport("__Internal")]
+        private static extern string JS_FBInstant_logEvent(string instanceUUID, string eventName, double valueToSum, string parameters);
+
         #else
 
         private static void JS_FBInstant_quit(string instanceUUID)
@@ -225,6 +228,9 @@ namespace Meta.InstantGames
             => "fake value from stub implementation";
 
         private static string JS_FBInstant_getPlatform(string instanceUUID)
+            => "fake value from stub implementation";
+
+        private static string JS_FBInstant_logEvent(string instanceUUID, string eventName, double valueToSum, string parameters)
             => "fake value from stub implementation";
 
         #endif
@@ -487,6 +493,19 @@ namespace Meta.InstantGames
         {
             var platform = JS_FBInstant_getPlatform(Uuid);
             return System.Enum.TryParse(typeof(Platform), platform, out var result) ? (Platform?)result : null;
+        }
+
+        /// <summary>
+        /// Log an app event and this can be tracked on Events Manager.
+        /// </summary>
+        /// <param name="eventName">Name of the event. Must be 2 to 40 characters, and can only contain '_', '-', ' ', and alphanumeric characters.</param>
+        /// <param name="valueToSum">An optional numeric value that FB Analytics can calculate a sum with.</param>
+        /// <param name="parameters">An optional object that can contain up to 25 key-value pairs to be logged with the event. Keys must be 2 to 40 characters, and can only contain '_', '-', ' ', and alphanumeric characters. Values must be less than 100 characters in length.</param>
+        /// <returns>Returns <see cref="ApiError"/>? The error if the event failed to log; otherwise returns null.</returns>
+        public APIError LogEvent(string eventName, double valueToSum = 0, string parameters = null)
+        {
+            var errorUuid = JS_FBInstant_logEvent(Uuid, eventName, valueToSum, parameters);
+            return errorUuid != null ? new APIError(errorUuid) : null;
         }
     }
 }

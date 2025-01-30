@@ -202,5 +202,26 @@ mergeInto(LibraryManager.library, {
         const args = [];
         const result = instance["getPlatform"](...args);
         return result === null ? null : JS_StringBuffer(result);
+    },
+    JS_FBInstant_logEvent__deps: ['$JS_getInstance', '$JS_StringBuffer', '$JS_saveReference'],
+    JS_FBInstant_logEvent: function(uuidPtr, eventNamePtr, valueToSum, parametersPtr)
+    {
+        let parameters;
+        if (parametersPtr !== 0) {
+            try {
+                parameters = JSON.parse(UTF8ToString(parametersPtr));
+            } catch {
+                const errorUuid = JS_saveReference(new APIError({
+                    code: 'INVALID_PARAM',
+                    message: "The parameter passed + \"" + UTF8ToString(parametersPtr) + "\" to the API is invalid"
+                }));
+                return JS_StringBuffer(errorUuid);
+            }
+        }
+
+        const instance = JS_getInstance(uuidPtr);
+        const args = [UTF8ToString(eventNamePtr), valueToSum, parameters];
+        const result = instance["logEvent"](...args);
+        return result === null ? null : JS_StringBuffer(JS_saveReference(result));
     }
 });
