@@ -120,6 +120,9 @@ namespace Meta.InstantGames
         [DllImport("__Internal")]
         private static extern string JS_FBInstant_getLocale(string instanceUUID);
 
+        [DllImport("__Internal")]
+        private static extern string JS_FBInstant_getPlatform(string instanceUUID);
+
         #else
 
         private static void JS_FBInstant_quit(string instanceUUID)
@@ -219,6 +222,9 @@ namespace Meta.InstantGames
             => successCallback(taskPtr, "fake value from stub implementation");
 
         private static string JS_FBInstant_getLocale(string instanceUUID)
+            => "fake value from stub implementation";
+
+        private static string JS_FBInstant_getPlatform(string instanceUUID)
             => "fake value from stub implementation";
 
         #endif
@@ -471,6 +477,16 @@ namespace Meta.InstantGames
         public string GetLocale()
         {
             return JS_FBInstant_getLocale(Uuid);
+        }
+
+        /// <summary>
+        /// The platform on which the game is currently running. The value will always be null until FBInstant.initializeAsync() resolves.
+        /// </summary>
+        /// <returns>The current platform.</returns>
+        public Platform? GetPlatform()
+        {
+            var platform = JS_FBInstant_getPlatform(Uuid);
+            return System.Enum.TryParse(typeof(Platform), platform, out var result) ? (Platform?)result : null;
         }
     }
 }

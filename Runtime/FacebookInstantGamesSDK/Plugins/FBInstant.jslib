@@ -194,5 +194,13 @@ mergeInto(LibraryManager.library, {
         const args = [];
         const result = instance["getLocale"](...args);
         return result === null ? null : JS_StringBuffer(result);
+    },
+    JS_FBInstant_getPlatform__deps: ['$JS_getInstance', '$JS_StringBuffer'],
+    JS_FBInstant_getPlatform: function(uuidPtr)
+    {
+        const instance = JS_getInstance(uuidPtr);
+        const args = [];
+        const result = instance["getPlatform"](...args);
+        return result === null ? null : JS_StringBuffer(result);
     }
 });
